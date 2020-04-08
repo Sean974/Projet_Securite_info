@@ -7,8 +7,8 @@ public class Hill {
     Ascii_extended ascci_extended = new Ascii_extended();
     ArrayList<String> alphabets = ascci_extended.getListe();
     ArrayList<Integer> pos_lettre = new ArrayList<Integer>();
-    String crypter = " ";
-    String decrypter = " ";
+    String crypter = "";
+    String decrypter = "";
 
     public Hill(String mot, int m, int a, int b, int c, int d, boolean cryptage){
         pos_lettre = combinaison_lineaire(indice_de(mot, m), a, b, c, d);

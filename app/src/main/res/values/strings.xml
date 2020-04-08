@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Projet_Securite_info</string>
+
+    <string-array name="crypto">
+        <item>Atbash</item>
+        <item>César</item>
+        <item>Vigenère</item>
+        <item>Homophone</item>
+        <item>Hill</item>
+        <item>DES</item>
+    </string-array>
 </resources>

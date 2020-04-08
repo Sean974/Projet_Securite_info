@@ -30,7 +30,7 @@ public class Vigenere {
                     x = 0;
                 }
                 if (res < 0) {
-                    res += 26;
+                    res += 256;
                     poids.add(res);
                     x += 1;
                     i += 1;
