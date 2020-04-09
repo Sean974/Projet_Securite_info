@@ -321,6 +321,25 @@ public class SecondActivity extends AppCompatActivity {
                 });
             }
 
+            //RSA
+            if(this.getSupportActionBar().getTitle().equals("RSA")){
+                key.setEnabled(false);
+                key.setHint("No key needed for RSA");
+                btn_crypter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String mess = mess_clair.getText().toString();
+                        if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair' ", Toast.LENGTH_SHORT).show();
+
+                        }else {
+                            RSA r = new RSA(mess);
+                            resultat.setText(r.crypt());
+                        }
+                    }
+                });
+            }
+
 
             btn_retour.setOnClickListener(new View.OnClickListener() {
                 @Override
