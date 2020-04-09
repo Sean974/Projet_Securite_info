@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SecondActivity extends AppCompatActivity {
@@ -49,20 +50,29 @@ public class SecondActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_clair.getText().toString();
-                        Atbash a = new Atbash(mess);
-                        resultat.setText(a.getResultat());
+                        if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair' ", Toast.LENGTH_SHORT).show();
 
-                        // Au cas ou si on veut decrypter un mot de l'ASCII extended
-                        mess_crypter.setText(resultat.getText());
+                        }else {
+                            Atbash a = new Atbash(mess);
+                            resultat.setText(a.getResultat());
+
+                            // Au cas ou si on veut decrypter un mot de l'ASCII extended
+                            mess_crypter.setText(resultat.getText());
+                        }
                     }
                 });
                 btn_decrypter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_crypter.getText().toString();
-                        Atbash a = new Atbash(mess);
-                        resultat.setText(a.getResultat());
+                        if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte crypter", Toast.LENGTH_SHORT).show();
 
+                        }else {
+                            Atbash a = new Atbash(mess);
+                            resultat.setText(a.getResultat());
+                        }
                     }
                 });
             }
@@ -79,22 +89,40 @@ public class SecondActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_clair.getText().toString();
-                        int decalage = Integer.parseInt(key.getText().toString());
 
-                        Cesar a = new Cesar(mess,decalage,true);
-                        resultat.setText(a.getResultat());
 
-                        // Au cas ou si on veut decrypter un mot de l'ASCII extended
-                        mess_crypter.setText(resultat.getText());
+                        if(mess.isEmpty() && key.getText().toString().isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte en clair' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair'", Toast.LENGTH_SHORT).show();
+                        }else if(key.getText().toString().isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un entier dans 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else{
+                            int decalage = Integer.parseInt(key.getText().toString());
+                            Cesar a = new Cesar(mess,decalage,true);
+                            resultat.setText(a.getResultat());
+
+                            // Au cas ou si on veut decrypter un mot de l'ASCII extended
+                            mess_crypter.setText(resultat.getText());
+                        }
                     }
                 });
                 btn_decrypter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_crypter.getText().toString();
-                        int decalage = Integer.parseInt(key.getText().toString());
-                        Cesar a = new Cesar(mess,decalage,false);
-                        resultat.setText(a.getResultat());
+
+                        if(mess.isEmpty() && key.getText().toString().isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte crypté' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte crypté'", Toast.LENGTH_SHORT).show();
+                        }else if(key.getText().toString().isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un entier dans 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else{
+                            int decalage = Integer.parseInt(key.getText().toString());
+                            Cesar a = new Cesar(mess,decalage,false);
+                            resultat.setText(a.getResultat());
+                        }
                     }
                 });
             }
@@ -107,12 +135,19 @@ public class SecondActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String mess = mess_clair.getText().toString();
                         String cle = key.getText().toString();
+                        if(mess.isEmpty() && cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte en clair' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair'", Toast.LENGTH_SHORT).show();
+                        }else if(cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un mot dans 'Clé'", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Vigenere a = new Vigenere(mess, cle, true);
+                            resultat.setText(a.getResultat());
 
-                        Vigenere a = new Vigenere(mess,cle,true);
-                        resultat.setText(a.getResultat());
-
-                        // Au cas ou si on veut decrypter un mot de l'ASCII extended
-                        mess_crypter.setText(resultat.getText());
+                            // Au cas ou si on veut decrypter un mot de l'ASCII extended
+                            mess_crypter.setText(resultat.getText());
+                        }
                     }
                 });
                 btn_decrypter.setOnClickListener(new View.OnClickListener() {
@@ -120,9 +155,16 @@ public class SecondActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String mess = mess_crypter.getText().toString();
                         String cle = key.getText().toString();
-
-                        Vigenere a = new Vigenere(mess,cle,false);
-                        resultat.setText(a.getResultat());
+                        if(mess.isEmpty() && cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte crypté' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte crypté'", Toast.LENGTH_SHORT).show();
+                        }else if(cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un mot dans 'Clé'", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Vigenere a = new Vigenere(mess, cle, false);
+                            resultat.setText(a.getResultat());
+                        }
                     }
                 });
             }
@@ -130,31 +172,45 @@ public class SecondActivity extends AppCompatActivity {
 
             //PROGRAMME POLYBE
             if(this.getSupportActionBar().getTitle().equals("Homophone")){
-
+                key.setEnabled(false);
+                key.setHint("No key for Homophone Polybe");
                 btn_crypter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_clair.getText().toString();
+                        if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair'", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Polybe a = new Polybe(mess);
 
-                        Polybe a = new Polybe(mess);
-                        List cryp = a.getCryptage();
-                        String res = "";
-                        for(int i=0;i<cryp.size();i++){
-                            res += cryp.get(i);
+                            //On transforme la matrice + les coordonnées en 1 chaine de caractère.
+                            ArrayList<List> cryp = a.getCryptage();
+                            String res = "";
+                            for (int i = 0; i < cryp.get(0).size(); i++) {
+                                res += cryp.get(0).get(i);
+                            }
+                            for (int i = 0; i < cryp.get(1).size(); i++) {
+                                res += cryp.get(1).get(i);
+                            }
+
+                            // Le mot crypté
+                            resultat.setText(res);
+
+                            // Au cas ou si on veut decrypter un mot de l'ASCII extended
+                            mess_crypter.setText(resultat.getText());
                         }
-                        resultat.setText(res);
-
-                        // Au cas ou si on veut decrypter un mot de l'ASCII extended
-                        mess_crypter.setText(resultat.getText());
                     }
                 });
                 btn_decrypter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_crypter.getText().toString();
-
-                        Polybe a = new Polybe(mess);
-                        resultat.setText(a.getDecryptage());
+                        if(mess.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte crypté'", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Polybe a = new Polybe(mess);
+                            resultat.setText(a.getDecryptage());
+                        }
                     }
                 });
             }
@@ -162,23 +218,33 @@ public class SecondActivity extends AppCompatActivity {
 
             //PROGRAMME Hill
             if(this.getSupportActionBar().getTitle().equals("Hill")){
-
+                key.setInputType(InputType.TYPE_CLASS_NUMBER);
                 btn_crypter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String mess = mess_clair.getText().toString();
                         String cle = key.getText().toString();
-                        int m = Integer.parseInt(Character.toString(cle.charAt(0)));
-                        int a = Integer.parseInt(Character.toString(cle.charAt(1)));
-                        int b = Integer.parseInt(Character.toString(cle.charAt(2)));
-                        int c = Integer.parseInt(Character.toString(cle.charAt(3)));
-                        int d = Integer.parseInt(Character.toString(cle.charAt(4)));
+                        if(mess.isEmpty() && cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte en clair' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair'", Toast.LENGTH_SHORT).show();
+                        }else if(cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un chiffre sans espace dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else if(cle.length() != 5){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer 5 chiffre sans espace dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else {
+                            int m = Integer.parseInt(Character.toString(cle.charAt(0)));
+                            int a = Integer.parseInt(Character.toString(cle.charAt(1)));
+                            int b = Integer.parseInt(Character.toString(cle.charAt(2)));
+                            int c = Integer.parseInt(Character.toString(cle.charAt(3)));
+                            int d = Integer.parseInt(Character.toString(cle.charAt(4)));
 
-                        Hill a1 = new Hill(mess,m,a,b,c,d,true);
-                        resultat.setText(a1.getCryptage());
+                            Hill a1 = new Hill(mess, m, a, b, c, d, true);
+                            resultat.setText(a1.getCryptage());
 
-                        // Au cas ou si on veut decrypter un mot de l'ASCII extended
-                        mess_crypter.setText(resultat.getText());
+                            // Au cas ou si on veut decrypter un mot de l'ASCII extended
+                            mess_crypter.setText(resultat.getText());
+                        }
                     }
                 });
                 btn_decrypter.setOnClickListener(new View.OnClickListener() {
@@ -186,14 +252,24 @@ public class SecondActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String mess = mess_crypter.getText().toString();
                         String cle = key.getText().toString();
-                        int m = Integer.parseInt(Character.toString(cle.charAt(0)));
-                        int a = Integer.parseInt(Character.toString(cle.charAt(1)));
-                        int b = Integer.parseInt(Character.toString(cle.charAt(2)));
-                        int c = Integer.parseInt(Character.toString(cle.charAt(3)));
-                        int d = Integer.parseInt(Character.toString(cle.charAt(4)));
+                        if(mess.isEmpty() && cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte crypté' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte crypté'", Toast.LENGTH_SHORT).show();
+                        }else if(cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer 5 chiffre sans espace dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else if(cle.length() != 5){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer 5 chiffre sans espace dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else {
+                            int m = Integer.parseInt(Character.toString(cle.charAt(0)));
+                            int a = Integer.parseInt(Character.toString(cle.charAt(1)));
+                            int b = Integer.parseInt(Character.toString(cle.charAt(2)));
+                            int c = Integer.parseInt(Character.toString(cle.charAt(3)));
+                            int d = Integer.parseInt(Character.toString(cle.charAt(4)));
 
-                        Hill a2 = new Hill(mess,m,a,b,c,d,false);
-                        resultat.setText(a2.getDecryptage());
+                            Hill a2 = new Hill(mess, m, a, b, c, d, false);
+                            resultat.setText(a2.getDecryptage());
+                        }
                     }
                 });
             }
@@ -207,12 +283,21 @@ public class SecondActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String mess = mess_clair.getText().toString();
                         String cle = key.getText().toString();
+                        if(mess.isEmpty() && cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte en clair' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair'", Toast.LENGTH_SHORT).show();
+                        }else if(cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un hexadecimal dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else if(cle.length() != 16){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un hexadecimal de 16 caractères dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else {
+                            DES d = new DES();
+                            resultat.setText(d.crypt(mess, cle));
 
-                        DES d = new DES();
-                        resultat.setText(d.crypt(mess,cle));
-
-                        // Au cas ou si on veut decrypter un mot de l'ASCII extended
-                        mess_crypter.setText(resultat.getText());
+                            // Au cas ou si on veut decrypter un mot de l'ASCII extended
+                            mess_crypter.setText(resultat.getText());
+                        }
                     }
                 });
                 btn_decrypter.setOnClickListener(new View.OnClickListener() {
@@ -220,9 +305,18 @@ public class SecondActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String mess = mess_crypter.getText().toString();
                         String cle = key.getText().toString();
-
-                        DES d = new DES();
-                        resultat.setText(d.decrypt(mess,cle));
+                        if(mess.isEmpty() && cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message et un entier dans 'Texte en clair' et 'Entrer un decalage ... '", Toast.LENGTH_SHORT).show();
+                        }else if(mess.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un message dans 'Texte en clair'", Toast.LENGTH_SHORT).show();
+                        }else if(cle.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un hexadecimal dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else if(cle.length() != 16){
+                            Toast.makeText(getApplicationContext(), "Veuillez entrer un hexadecimal de 16 caractères dans 'Clé '", Toast.LENGTH_SHORT).show();
+                        }else {
+                            DES d = new DES();
+                            resultat.setText(d.decrypt(mess, cle));
+                        }
                     }
                 });
             }

@@ -10,12 +10,25 @@ public class Polybe{
     static String mot;
     static String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-    public Polybe(String m) {
-        mot = m;
+    public Polybe(String mot) {
+        this.mot = mot;
     }
 
-    public List getCryptage(){return Crypter(mot);}
-    public String getDecryptage(){return Decrypter(init_matrice(mot),Crypter(mot));}
+    public ArrayList<List> getCryptage(){return Crypter(mot);}
+    public String getDecryptage(){
+        ArrayList<List> liste = new ArrayList<List>();
+        ArrayList<String> matrice = new ArrayList<String>();
+        ArrayList<String> cle = new ArrayList<String>();
+        for(int i=0;i<36;i++){
+            matrice.add(Character.toString(mot.charAt(i)));
+        }
+        for(int i=36;i<mot.length();i++){
+            cle.add(Character.toString(mot.charAt(i)));
+        }
+        liste.add(matrice);
+        liste.add(cle);
+        return Decrypter(liste);
+    }
 
     public String liste_sans_doublon(String text) {
         String res = "";
@@ -102,10 +115,47 @@ public class Polybe{
         /*for(int x = 0; x<liste.size();x++){
             System.out.print(liste.get(x));
         }*/
-        return liste;
+
+
+        ArrayList<List> test = new ArrayList<List>();
+        ArrayList<String> mMatrice = new ArrayList<String>();
+        ArrayList<String> mCode = new ArrayList<String>();
+        for (int x = 0; x < LIGNE; x++) {
+            for (int y = 0; y < COLONNE; y++) {
+                mMatrice.add(matrice[x][y]);
+            }
+        }
+        test.add(mMatrice);
+        for(List e : liste){
+            mCode.add((String) e.get(0));
+            mCode.add((String) e.get(1));
+        }
+
+        test.add(mCode);
+        return test;
     }
 
-    public String Decrypter(String[][] matrice, ArrayList<List> liste_couples) {
+    public String Decrypter(ArrayList<List> liste_couples) {
+
+        String nMatrice = "";
+        List li = liste_couples.get(0);
+        for(int i=0; i<li.size();i++){
+            nMatrice += li.get(i);
+        }
+        String[][] matrice = init_matrice(nMatrice);
+
+        List li2 = liste_couples.get(1);
+        List nCouple;
+        ArrayList<List> nListe = new ArrayList<List>();
+        for(int i=0; i<li2.size();i+=2){
+            nCouple  = new ArrayList<String>();
+            nCouple.add(li2.get(i));
+            nCouple.add(li2.get(i+1));
+            nListe.add(nCouple);
+        }
+
+        liste_couples = nListe;
+
         String chaine = "";
         int lig = 0, col =0;
         for (List e : liste_couples) {
@@ -121,13 +171,15 @@ public class Polybe{
             }
             chaine += matrice[lig][col];
         }
+
         //System.out.println(chaine);
         return chaine;
     }
 
     public static void main(String[] args) {
-        Polybe a1 = new Polybe("bonjour");
-        System.out.println(a1.getCryptage());
-        //System.out.println(a1.getDecryptage());
+        Polybe a1 = new Polybe("Heloabcdfghijkmnpqrstuvwxyz012345678bjbdato5a0");
+        //System.out.println(a1.getCryptage());
+        System.out.println(a1.getDecryptage());
+
     }
 }
